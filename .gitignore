@@ -1,14 +1,1 @@
-/.DS_Store
-/.idea
-/.streamlit
-/.secrets.toml
-/chatbot-vertexai.py
-/chatbot.py
-/chatbot2.py
-/chatbot3.py
-/gemini-test.py
-/gemini-vision-test.py
-/venv
-/vertexai-test.py
-.env
-custom-gemini-llm-test.py
+.DS_Store
