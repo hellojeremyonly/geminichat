@@ -9,7 +9,9 @@ from langchain.callbacks.manager import CallbackManagerForLLMRun
 from langchain_core.language_models.llms import LLM
 from vertexai.preview.generative_models import GenerativeModel
 
-vertexaiinit("gproject_id")
+project_id = st.secrets["gproject_id"]
+init(project=project_id)
+gemini_pro_model = GenerativeModel("gemini-pro")
 
 class GeminiProLLM(LLM):
     @property
