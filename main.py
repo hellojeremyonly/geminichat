@@ -47,8 +47,7 @@ class GeminiProLLM(LLM):
 
 
 # Initialize Vertex AI
-project_name = st.write("my_google_account_secrets:", st.secrets["gproject"])
-vertexai.init(project=project_name)
+vertexai.init(**st.secrets.gproject)
 
 # Setting page title and header
 st.set_page_config(page_title="Gemini Pro Chatbot", page_icon=":robot_face:")
