@@ -10,7 +10,7 @@ from langchain_core.language_models.llms import LLM
 from vertexai.preview.generative_models import GenerativeModel
 
 project_id = st.secrets["gproject_id"]
-init(project=project_id)
+init(project=gproject_id)
 gemini_pro_model = GenerativeModel("gemini-pro")
 
 class GeminiProLLM(LLM):
