@@ -1,6 +1,6 @@
 import streamlit as st
 import os
-import vertexai
+from vertexai import init
 from vertexai.preview.generative_models import GenerativeModel
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
@@ -10,8 +10,8 @@ from langchain_core.language_models.llms import LLM
 from vertexai.preview.generative_models import GenerativeModel
 
 project_id = st.secrets["gproject_id"]
-init(project=gproject_id)
-gemini_pro_model = GenerativeModel("gemini-pro")
+    init(project=project_id)
+        gemini_pro_model = GenerativeModel("gemini-pro")
 
 class GeminiProLLM(LLM):
     @property
