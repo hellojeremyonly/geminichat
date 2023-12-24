@@ -1,6 +1,7 @@
-import streamlit as st
 import os
-from vertexai import init
+from dotenv import load_dotenv
+import streamlit as st
+import vertexai
 from vertexai.preview.generative_models import GenerativeModel
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
@@ -9,9 +10,6 @@ from langchain.callbacks.manager import CallbackManagerForLLMRun
 from langchain_core.language_models.llms import LLM
 from vertexai.preview.generative_models import GenerativeModel
 
-project_id = st.secrets["gproject_id"]
-    init(project=project_id)
-        gemini_pro_model = GenerativeModel("gemini-pro")
 
 class GeminiProLLM(LLM):
     @property
@@ -35,16 +33,32 @@ class GeminiProLLM(LLM):
             prompt, 
             generation_config={"temperature": 0.1}
         )
-        text_content = model_response.candidates[0].content.parts[0].text
-        return text_content
+        print(model_response)
+
+        if len(model_response.candidates[0].content.parts) > 0:
+            return model_response.candidates[0].content.parts[0].text
+        else:
+            return "<No answer given by Gemini Pro>"
 
     @property
     def _identifying_params(self) -> Mapping[str, Any]:
         """Get the identifying parameters."""
         return {"model_id": "gemini-pro", "temperature": 0.1}
 
+
+# Initialize Vertex AI
+load_dotenv()
+project_name = os.getenv("VERTEXAI_PROJECT")
+vertexai.init(project=project_name)
+
+# Setting page title and header
+st.set_page_config(page_title="Gemini Pro Chatbot", page_icon=":robot_face:")
+st.markdown("<h1 style='text-align: center;'>Gemini Pro Chatbot</h1>", unsafe_allow_html=True)
+
+# Load chat model
 @st.cache_resource
 def load_chain():
+    # llm = ChatVertexAI(model_name="chat-bison@002")
     llm = GeminiProLLM()
     memory = ConversationBufferMemory()
     chain = ConversationChain(llm=llm, memory=memory)
@@ -54,6 +68,13 @@ chatchain = load_chain()
 
 # Initialise session state variables
 if 'messages' not in st.session_state:
+    st.session_state['messages'] = []
+
+st.sidebar.title("Sidebar")
+clear_button = st.sidebar.button("Clear Conversation", key="clear")
+
+# Reset conversation
+if clear_button:
     st.session_state['messages'] = []
 
 # Display previous messages
