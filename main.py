@@ -1,8 +1,15 @@
 import streamlit as st
 import os
-from vertexai import init
+import vertexai
+from vertexai.preview.generative_models import GenerativeModel
+from langchain.chains import ConversationChain
+from langchain.memory import ConversationBufferMemory
+from typing import Any, List, Mapping, Optional
+from langchain.callbacks.manager import CallbackManagerForLLMRun
+from langchain_core.language_models.llms import LLM
+from vertexai.preview.generative_models import GenerativeModel
 
-vertexai.init("gproject_id")
+vertexaiinit("gproject_id")
 
 class GeminiProLLM(LLM):
     @property
@@ -34,6 +41,7 @@ class GeminiProLLM(LLM):
         """Get the identifying parameters."""
         return {"model_id": "gemini-pro", "temperature": 0.1}
 
+@st.cache_resource
 def load_chain():
     llm = GeminiProLLM()
     memory = ConversationBufferMemory()
