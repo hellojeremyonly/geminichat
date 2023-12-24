@@ -47,8 +47,7 @@ class GeminiProLLM(LLM):
 
 
 # Initialize Vertex AI
-load_dotenv()
-project_name = os.getenv("VERTEXAI_PROJECT")
+project_name(**st.secrets.gproject_id)
 vertexai.init(project=project_name)
 
 # Setting page title and header
