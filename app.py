@@ -39,7 +39,7 @@ else:
         else:
             try:
                 response = st.session_state.chat.send_message(prompt)
-                st.session_state.count += 1  # Increment message count
+                st.session_state.count += 5  # Increment message count
                 with st.chat_message("assistant"):
                     st.markdown(response.text)
             except Exception as e:
