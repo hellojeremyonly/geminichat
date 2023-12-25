@@ -1,16 +1,7 @@
-import os
-import json
 import streamlit as st
+import os
 import google.generativeai as genai
 from datetime import datetime
-from google.oauth2.service_account import Credentials
-
-# Clients Credentials for Google
-with open('/Users/hellojeremyonly/Documents/Env_Var/client_secret_461952724788-ts8ok57spkn1e7cpl8d67c58l2iiin7e.apps.googleusercontent.com.json', 'r') as file:
-    json_credentials = json.load(file)
-    
-# Credentials authenticate
-credentials = Credentials.from_service_account_info(json_credentials)
 
 # Initialize Gemini-Pro 
 genai.configure(api_key=os.getenv("GOOGLE_GEMINI_KEY"))
